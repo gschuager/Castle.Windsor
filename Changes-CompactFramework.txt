@@ -1,0 +1,39 @@
+Castle.InversionOfControl
+
+
+Things left out:
+- Logging facility
+- almost all Castle.Windsor.Adapters.ComponentModel namespace
+- serialization & remoting stuff
+- FastCreateInstance
+- web related stuff (WebUserControlComponentActivator, PerWebRequestLifestyleManager, 
+- configuration stuff - no System.Configuration in CF (several things in Castle.Windsor.Configuration namespace)
+- DebuggerDisplay attribute usages
+- child containers support in DefaultComponentInstaller (same as SL build)
+- MixinInspector & ComponentProxyInspector
+- StartableFacilityRegistrationExtensions - uses System.Linq.Expressions (not in CF)
+- PerThreadThreadStaticLifestyleManager - uses ThreadStatic (not in CF)
+- DefaultProxyFactory - uses DynamicProxy (not ported)
+
+
+Modifications:
+- replaced Type.EmptyTypes with new Type[0] everywhere
+- created CompactFrameworkExtensions to implement:
+  - replacement of Actionvator.CreateInstance(Type type, params object[] args)
+  - TypeUtil.GetAllInterfaces that is currently in DynamicProxy (not included)
+- replaced override of Delegate.CreateDelegate used in EventWiringFacility (need to test this)
+- replaced usage of type.MakeArrayType() with Type.GetType(type.FullName + "[]") in TypedFactoryComponentCollection (needs more testing but seems to work)
+- AllTypes.FromAssemblyNamed has same behavior as SL build
+- alternative implementation of FromAssemblyDescriptor.SelectedTypes (no Assembly.GetExportedTypes in CF)
+- alternative implementation of ServiceDescriptor.FromInterface (no Type.GetInterfaces in CF)
+- alternative implementation of ComponentModelConverter - needs testing
+- replaced System.Threading.Thread.CurrentThread.CurrentCulture by System.Globalization.CultureInfo.InvariantCulture
+- replaced initialization of this.kernel.ProxyFactory with a new instance of NotSupportedProxyFactory in WindsorContainer
+
+
+TODO:
+- replace [ThreadStatic] attribute (currently commented out) on DefaultKernel.currentCreationContext field with an equivalent implementation using TLS
+- research how to detect "out" parameters (ParameterInfo.IsOut not supported in CF) in TypedFactoryRegistrationExtensions
+
+
+I don't know how to integrate the Tests project.
