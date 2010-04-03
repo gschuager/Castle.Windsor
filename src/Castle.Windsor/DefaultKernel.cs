@@ -21,6 +21,9 @@ namespace Castle.MicroKernel
 #if !SILVERLIGHT
 	using System.Runtime.Serialization;
 #endif
+#if NETCF
+	using System.Threading;
+#endif
 
 	using Castle.Core;
 	using Castle.Core.Internal;
@@ -97,9 +100,25 @@ namespace Castle.MicroKernel
 		/// </summary>
 		private List<IKernel> childKernels;
 
-        // TODO: Reenable this by using thread-local-storage
-		//[ThreadStatic]
+#if !NETCF
+		[ThreadStatic]
 	    private static CreationContext currentCreationContext;
+#else
+		private static LocalDataStoreSlot currentCreationContextSlot = Thread.AllocateNamedDataSlot("currentCreationContext");
+
+		private static CreationContext currentCreationContext
+		{
+			get
+			{
+				return (CreationContext)Thread.GetData(currentCreationContextSlot);
+			}
+			set
+			{
+				Thread.SetData(currentCreationContextSlot, value);
+			}
+		}
+#endif
+
 
 	    #endregion
 
