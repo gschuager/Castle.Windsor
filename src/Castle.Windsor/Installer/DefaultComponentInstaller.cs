@@ -40,7 +40,7 @@ namespace Castle.Windsor.Installer
 			SetUpComponents(store.GetBootstrapComponents(), container);
 			SetUpFacilities(store.GetFacilities(), container);
 			SetUpComponents(store.GetComponents(), container);
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 			SetUpChildContainers(store.GetConfigurationForChildContainers(), container);
 #endif
 		}
@@ -138,7 +138,7 @@ namespace Castle.Windsor.Installer
 			}
 		}
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 		private static void SetUpChildContainers(IConfiguration[] configurations, IWindsorContainer parentContainer)
 		{
 			foreach(IConfiguration childContainerConfig in configurations)

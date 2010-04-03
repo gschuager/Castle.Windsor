@@ -42,7 +42,7 @@ namespace Castle.MicroKernel
 	/// This implementation is complete and also support a kernel 
 	/// hierarchy (sub containers).
 	/// </summary>
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 	[Serializable]
 	public partial class DefaultKernel : MarshalByRefObject, IKernel, IKernelEvents, IDeserializationCallback
 #else
@@ -97,7 +97,8 @@ namespace Castle.MicroKernel
 		/// </summary>
 		private List<IKernel> childKernels;
 
-        [ThreadStatic]
+        // TODO: Reenable this by using thread-local-storage
+		//[ThreadStatic]
 	    private static CreationContext currentCreationContext;
 
 	    #endregion
@@ -146,7 +147,7 @@ namespace Castle.MicroKernel
 			resolver.Initialize(new DependencyDelegate(RaiseDependencyResolving));
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public DefaultKernel(SerializationInfo info, StreamingContext context)
 		{
 			MemberInfo[] members = FormatterServices.GetSerializableMembers(GetType(), context);
@@ -655,7 +656,11 @@ namespace Castle.MicroKernel
 				try
 				{
 					activator = (IComponentActivator)
+#if !NETCF
 					            Activator.CreateInstance(model.CustomComponentActivator,
+#else
+					            CompactFrameworkExtensions.ActivatorEx.CreateInstance(model.CustomComponentActivator,
+#endif
 					                                     new object[]
 					                                     {
 					                                     	model,
@@ -929,7 +934,7 @@ namespace Castle.MicroKernel
 
 		#region Serialization and Deserialization
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{

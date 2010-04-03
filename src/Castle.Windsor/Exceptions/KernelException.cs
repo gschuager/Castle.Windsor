@@ -43,7 +43,7 @@ namespace Castle.MicroKernel
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="KernelException"/> class.
 		/// </summary>

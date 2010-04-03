@@ -33,7 +33,7 @@ namespace Castle.MicroKernel.Resolvers
 		{
 		}
 
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DependencyResolverException"/> class.
 		/// </summary>

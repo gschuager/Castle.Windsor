@@ -303,8 +303,13 @@ namespace Castle.Facilities.EventWiring
 						                               + subscriberInstance.GetType().FullName);
 					}
 
+#if !NETCF
 					Delegate delegateHandler = Delegate.CreateDelegate(eventInfo.EventHandlerType,
 					                                                   subscriberInstance, wireInfo.Handler);
+#else
+					Delegate delegateHandler = Delegate.CreateDelegate(eventInfo.EventHandlerType,
+												   subscriberInstance, handlerMethod);
+#endif
 
 					eventInfo.AddEventHandler(publisher, delegateHandler);
 				}

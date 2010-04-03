@@ -296,6 +296,7 @@ namespace Castle.MicroKernel.Registration
 			return this;
 		}
 
+#if !NETCF
 		/// <summary>
 		/// Set proxy for this component.
 		/// </summary>
@@ -304,6 +305,7 @@ namespace Castle.MicroKernel.Registration
 		{
 			get { return new Proxy.ProxyGroup<S>(this); }
 		}
+#endif
 
 		/// <summary>
 		/// Set the lifestyle of this component.

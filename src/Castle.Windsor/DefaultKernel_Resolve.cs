@@ -23,7 +23,7 @@ namespace Castle.MicroKernel
 	using Castle.MicroKernel.Context;
 	using Castle.MicroKernel.Handlers;
 
-#if (SILVERLIGHT)
+#if SILVERLIGHT || NETCF
 	public partial class DefaultKernel : IKernel, IKernelEvents
 #else
 	public partial class DefaultKernel : MarshalByRefObject, IKernel, IKernelEvents, IDeserializationCallback

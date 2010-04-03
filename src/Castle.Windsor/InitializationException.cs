@@ -34,7 +34,7 @@ namespace Castle.Windsor
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public InitializationException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

@@ -101,7 +101,7 @@ namespace Castle.Windsor
 			RunInstaller();
 		}
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WindsorContainer"/> class using a
 		/// xml file to configure it.
@@ -148,7 +148,11 @@ namespace Castle.Windsor
 
 			this.name = name;
 			this.kernel = kernel;
+#if NETCF
+			this.kernel.ProxyFactory = new MicroKernel.Proxy.NotSupportedProxyFactory();
+#else
 			this.kernel.ProxyFactory = new Proxy.DefaultProxyFactory();
+#endif
 			this.installer = installer;
 		}
 

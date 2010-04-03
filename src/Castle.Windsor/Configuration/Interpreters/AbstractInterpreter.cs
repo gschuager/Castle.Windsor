@@ -61,7 +61,7 @@ namespace Castle.Windsor.Configuration.Interpreters
 		{
 		} 
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 		public AbstractInterpreter() : this(new ConfigResource())
 		{
 		}

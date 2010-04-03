@@ -15,7 +15,9 @@
 namespace Castle.MicroKernel.Proxy
 {
 	using System;
+#if (!NETCF)
 	using System.Runtime.Remoting;
+#endif
 	using Castle.Core;
 	using Castle.Core.Interceptor;
 
@@ -45,6 +47,7 @@ namespace Castle.MicroKernel.Proxy
 
 		public static object GetUnproxiedInstance(object instance)
 		{
+#if (!NETCF)
 #if (!SILVERLIGHT)
 			if (!RemotingServices.IsTransparentProxy(instance))
 			{
@@ -58,12 +61,14 @@ namespace Castle.MicroKernel.Proxy
 #if (!SILVERLIGHT)
 			}
 #endif
+#endif
 
 			return instance;
 		}
 
 		public static Type GetUnproxiedType(object instance)
 		{
+#if (!NETCF)
 #if (!SILVERLIGHT)
 			if (!RemotingServices.IsTransparentProxy(instance))
 			{
@@ -86,6 +91,7 @@ namespace Castle.MicroKernel.Proxy
 				}
 #if (!SILVERLIGHT)
 			}
+#endif
 #endif
 
 			return instance.GetType();

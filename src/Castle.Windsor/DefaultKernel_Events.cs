@@ -26,7 +26,7 @@ namespace Castle.MicroKernel
 	/// This implementation is complete and also support a kernel 
 	/// hierarchy (sub containers).
 	/// </summary>
-#if (SILVERLIGHT)
+#if SILVERLIGHT || NETCF
 	public partial class DefaultKernel : IKernel, IKernelEvents
 #else
 	public partial class DefaultKernel : MarshalByRefObject, IKernel, IKernelEvents, IDeserializationCallback
@@ -52,7 +52,7 @@ namespace Castle.MicroKernel
 #endif
 		private readonly IDictionary<object,Delegate> events = new Dictionary<object,Delegate>();
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 		public override object InitializeLifetimeService()
 		{
 			return null;

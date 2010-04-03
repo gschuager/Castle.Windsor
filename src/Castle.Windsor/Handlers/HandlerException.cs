@@ -33,7 +33,7 @@ namespace Castle.MicroKernel.Handlers
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HandlerException"/> class.
 		/// </summary>

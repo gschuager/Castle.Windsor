@@ -65,7 +65,7 @@ namespace Castle.MicroKernel.Registration
 
 			if (extension == ".dll" || extension == ".exe")
 			{
-#if (SILVERLIGHT)
+#if SILVERLIGHT || NETCF
 				assembly = Assembly.Load(Path.GetFileNameWithoutExtension(assemblyName));
 #else
 				if (Path.GetDirectoryName(assemblyName) == AppDomain.CurrentDomain.BaseDirectory)

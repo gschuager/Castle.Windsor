@@ -14,7 +14,7 @@
 
 namespace Castle.Windsor.Adapters.ComponentModel
 {
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 	using System.ComponentModel;
 	using System.ComponentModel.Design;
 

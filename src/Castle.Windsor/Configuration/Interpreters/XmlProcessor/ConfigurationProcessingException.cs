@@ -30,7 +30,7 @@ namespace Castle.Windsor.Configuration.Interpreters.XmlProcessor
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public ConfigurationProcessingException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

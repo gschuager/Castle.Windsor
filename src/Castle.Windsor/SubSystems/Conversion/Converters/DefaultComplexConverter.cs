@@ -68,8 +68,11 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			{
 				args = ConvertConstructorParameters(constructor, configuration);
 			}
-
+#if NETCF
+			object instance = CompactFrameworkExtensions.ActivatorEx.CreateInstance(type, args);
+#else
 			object instance = Activator.CreateInstance(type, args);
+#endif
 			return instance;
 		}
 

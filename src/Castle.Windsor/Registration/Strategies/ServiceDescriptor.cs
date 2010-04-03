@@ -86,7 +86,11 @@ namespace Castle.MicroKernel.Registration
 
 				foreach (Type theInterface in GetTopLevelInterfaces(type))
 				{
+#if NETCF
+					if (theInterface.GetInterfaces().Any(t => t.FullName.Equals(implements.FullName)))
+#else
 					if (theInterface.GetInterface(implements.FullName, false) != null)
+#endif
 					{
 						matches.Add(theInterface);
 					}

@@ -19,7 +19,9 @@ namespace Castle.MicroKernel.Facilities.TypedFactory
 	using System.Collections.Generic;
 	using System.Linq;
 
+#if !NETCF
 	using Castle.DynamicProxy.Generators.Emitters;
+#endif
 
 	/// <summary>
 	/// Represents a set of components to be resolved via Typed Factory. Uses <see cref="IKernel.ResolveAll(System.Type,System.Collections.IDictionary)"/> to resolve the components.
@@ -53,7 +55,11 @@ namespace Castle.MicroKernel.Facilities.TypedFactory
 
 		protected void CheckReturnTypeCanBeSatisfiedByArrayOf(Type type)
 		{
+#if NETCF
+			var arrayType = Type.GetType(type.FullName + "[]");
+#else
 			var arrayType = type.MakeArrayType();
+#endif
 			if (ComponentType.IsAssignableFrom(arrayType))
 			{
 				return;
@@ -71,7 +77,11 @@ namespace Castle.MicroKernel.Facilities.TypedFactory
 
 			if (ComponentType.IsGenericType) // we support generic collections only
 			{
+#if NETCF
+				foreach (var @interface in CompactFrameworkExtensions.TypeUtil.GetAllInterfaces(ComponentType))
+#else
 				foreach (var @interface in TypeUtil.GetAllInterfaces(ComponentType))
+#endif
 				{
 					if(@interface.IsGenericType == false) continue;
 

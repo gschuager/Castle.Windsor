@@ -49,7 +49,7 @@ namespace Castle.MicroKernel.Exceptions
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CircularDependencyException"/> class.
 		/// </summary>

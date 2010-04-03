@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if !(MONO || SILVERLIGHT)
+#if !(MONO || SILVERLIGHT || NETCF)
 
 namespace Castle.MicroKernel.ComponentActivator
 {

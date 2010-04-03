@@ -33,7 +33,7 @@ namespace Castle.MicroKernel.Facilities
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public FacilityException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

@@ -67,11 +67,17 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			{
 				convertTo = (Type) Context.Composition.PerformConversion(itemType, typeof(Type));
 			}
-
+#if NETCF
+			IGenericCollectionConverterHelper converterHelper = (IGenericCollectionConverterHelper)
+																CompactFrameworkExtensions.ActivatorEx.CreateInstance(
+			                                                    	typeof(ListHelper<>).MakeGenericType(convertTo),
+			                                                    	this);
+#else
 			IGenericCollectionConverterHelper converterHelper = (IGenericCollectionConverterHelper)
 			                                                    Activator.CreateInstance(
 			                                                    	typeof(ListHelper<>).MakeGenericType(convertTo),
 			                                                    	this);
+#endif
 			return converterHelper.ConvertConfigurationToCollection(configuration);
 		}
 

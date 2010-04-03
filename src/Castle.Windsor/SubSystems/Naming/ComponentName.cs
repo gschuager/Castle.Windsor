@@ -19,7 +19,7 @@ namespace Castle.MicroKernel.SubSystems.Naming
 	using System.Text;
 	using System.Runtime.Serialization;
 
-#if (SILVERLIGHT)
+#if SILVERLIGHT || NETCF
 	public class ComponentName 
 #else
 	[Serializable]
@@ -58,7 +58,7 @@ namespace Castle.MicroKernel.SubSystems.Naming
 			get { return internalproperties; }
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Serialization constructor.
 		/// </summary>
@@ -238,7 +238,7 @@ namespace Castle.MicroKernel.SubSystems.Naming
 		}
 
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("service", internalService);

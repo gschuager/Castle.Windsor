@@ -38,7 +38,7 @@ namespace Castle.MicroKernel.ComponentActivator
 #endif
 	public class DefaultComponentActivator : AbstractComponentActivator
 	{
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		private readonly bool useFastCreateInstance;
 #endif
 		/// <summary>
@@ -53,7 +53,7 @@ namespace Castle.MicroKernel.ComponentActivator
 										 ComponentInstanceDelegate onDestruction)
 			: base(model, kernel, onCreation, onDestruction)
 		{
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 			useFastCreateInstance = !model.Implementation.IsContextful && SecurityManager.IsGranted(new SecurityPermission(SecurityPermissionFlag.SerializationFormatter));
 #endif
 		}
@@ -117,7 +117,7 @@ namespace Castle.MicroKernel.ComponentActivator
 			{
 				try
 				{
-#if (SILVERLIGHT)
+#if SILVERLIGHT ||NETCF
 						instance = ActivatorCreateInstance(implType, arguments);
 #else
 					if (useFastCreateInstance)
@@ -153,7 +153,7 @@ namespace Castle.MicroKernel.ComponentActivator
 			return instance;
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		private static object FastCreateInstance(Type implType, object[] arguments, Type[] signature)
 		{
 			// otherwise GetConstructor wil blow up instead of returning null
@@ -180,7 +180,11 @@ namespace Castle.MicroKernel.ComponentActivator
 		{
 			try
 			{
+#if NETCF
+				return CompactFrameworkExtensions.ActivatorEx.CreateInstance(implType, arguments);
+#else
 				return Activator.CreateInstance(implType, arguments);
+#endif
 			}
 			catch (MissingMethodException missingMethodException)
 			{

@@ -36,7 +36,7 @@ namespace Castle.MicroKernel.SubSystems.Resource
 		{
 			RegisterResourceFactory( new AssemblyResourceFactory() );
 			RegisterResourceFactory( new UncResourceFactory() );
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCF
 			RegisterResourceFactory( new FileResourceFactory() );
 			RegisterResourceFactory( new ConfigResourceFactory() );
 #endif

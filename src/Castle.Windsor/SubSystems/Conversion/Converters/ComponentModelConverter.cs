@@ -31,18 +31,23 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 			// Mono 1.9+ thinks it can convert strings to interface
 			if (type.IsInterface)
 				return false;
-
+#if !NETCF
 			TypeConverter converter = TypeDescriptor.GetConverter(type);
 			return (converter != null && converter.CanConvertFrom(typeof(String)));
+#else			return true;
+#endif
 		}
 
 		public override object PerformConversion(String value, Type targetType)
 		{
-			TypeConverter converter = TypeDescriptor.GetConverter(targetType);
-
 			try
 			{
+#if !NETCF
+				TypeConverter converter = TypeDescriptor.GetConverter(targetType);
 				return converter.ConvertFrom(value);
+#else
+				return Convert.ChangeType(value, targetType, System.Globalization.CultureInfo.InvariantCulture);
+#endif
 			}
 			catch(Exception ex)
 			{

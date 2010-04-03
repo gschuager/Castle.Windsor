@@ -26,7 +26,7 @@ namespace Castle.MicroKernel.Lifestyle.Pool
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public PoolException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

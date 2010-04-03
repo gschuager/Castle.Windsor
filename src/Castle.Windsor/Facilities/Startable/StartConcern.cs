@@ -47,7 +47,11 @@ namespace Castle.Facilities.Startable
 
 				if (startMethod != null)
 				{
+#if !NETCF
 					MethodInfo method = model.Implementation.GetMethod(startMethod, Type.EmptyTypes);
+#else
+					MethodInfo method = model.Implementation.GetMethod(startMethod, new Type[0]);
+#endif
 					method.Invoke(component, null);
 				}
 			}

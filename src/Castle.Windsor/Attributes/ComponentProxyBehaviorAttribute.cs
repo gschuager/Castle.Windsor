@@ -50,8 +50,11 @@ namespace Castle.Core
 				{
 					return additionalInterfaces;
 				}
-
+#if !NETCF
 				return Type.EmptyTypes;
+#else
+				return new Type[0];
+#endif
 			}
 			set { additionalInterfaces = value; }
 		}

@@ -42,7 +42,7 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConverterException"/> class.
 		/// </summary>

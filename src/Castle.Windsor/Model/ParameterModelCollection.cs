@@ -29,7 +29,9 @@ namespace Castle.Core
 	[Serializable]
 #endif
 
+#if !NETCF
 	[DebuggerDisplay("Count = {dictionary.Count}")]
+#endif
 	public class ParameterModelCollection : Collection<ParameterModel>
 	{
 		private readonly IDictionary<string, ParameterModel> dictionary =

@@ -72,10 +72,16 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 				defaultValueType = (Type) Context.Composition.PerformConversion(valueTypeName, typeof(Type));
 			}
 
+#if NETCF
+			IGenericCollectionConverterHelper collectionConverterHelper =
+				(IGenericCollectionConverterHelper)
+				CompactFrameworkExtensions.ActivatorEx.CreateInstance(typeof(DictionaryHelper<,>).MakeGenericType(defaultKeyType, defaultValueType), this);
+#else
 			IGenericCollectionConverterHelper collectionConverterHelper =
 				(IGenericCollectionConverterHelper)
 				Activator.CreateInstance(typeof(DictionaryHelper<,>).MakeGenericType(defaultKeyType, defaultValueType), this);
-			
+#endif
+
 			return collectionConverterHelper.ConvertConfigurationToCollection(configuration);
 		}
 

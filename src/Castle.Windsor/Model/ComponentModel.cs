@@ -78,7 +78,9 @@ namespace Castle.Core
 	/// Represents the collection of information and
 	/// meta information collected about a component.
 	/// </summary>
+#if !NETCF
 	[DebuggerDisplay("{Implementation} / {Service}")]
+#endif
 #if !SILVERLIGHT
 	[Serializable]
 #endif

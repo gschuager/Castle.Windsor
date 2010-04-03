@@ -39,12 +39,21 @@ namespace Castle.MicroKernel.Registration
 
 		protected override IEnumerable<Type> SelectedTypes(IKernel kernel)
 		{
+#if !NETCF
 			if (nonPublicTypes)
 			{
 				return assembly.GetTypes();
 			}
 
 			return assembly.GetExportedTypes();
+#else
+			var allTypes = assembly.GetTypes();
+			foreach (var type in allTypes)
+			{
+				if (type.IsPublic || nonPublicTypes)
+					yield return type;
+			}
+#endif
 		}
 	}
 }

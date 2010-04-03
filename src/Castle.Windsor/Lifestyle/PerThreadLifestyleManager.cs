@@ -15,7 +15,7 @@
 
 namespace Castle.MicroKernel.Lifestyle
 {
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT
 	using System;
 	using System.Collections.Generic;
 	using System.Threading;
@@ -24,8 +24,12 @@ namespace Castle.MicroKernel.Lifestyle
 	/// <summary>
 	/// Summary description for PerThreadLifestyleManager.
 	/// </summary>
+#if !NETCF
 	[Serializable]
 	public class PerThreadLifestyleManager : AbstractLifestyleManager, IDeserializationCallback
+#else
+	public class PerThreadLifestyleManager : AbstractLifestyleManager
+#endif
 	{
 		[NonSerialized]
 		private static LocalDataStoreSlot slot = Thread.AllocateNamedDataSlot("CastlePerThread");

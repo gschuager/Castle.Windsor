@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 {
 	using System;
@@ -68,7 +69,11 @@ namespace Castle.MicroKernel.Resolvers.SpecializedResolvers
 			var items = kernel.ResolveAll(elementType, null);
 
 			var listType = typeof(List<>).MakeGenericType(elementType);
+#if NETCF
+			var list = CompactFrameworkExtensions.ActivatorEx.CreateInstance(listType, items);
+#else
 			var list = Activator.CreateInstance(listType, items);
+#endif
 
 			return list;
 		}

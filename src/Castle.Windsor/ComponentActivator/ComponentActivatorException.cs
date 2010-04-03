@@ -33,7 +33,7 @@ namespace Castle.MicroKernel.ComponentActivator
 		{
 		}
 		
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public ComponentActivatorException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}

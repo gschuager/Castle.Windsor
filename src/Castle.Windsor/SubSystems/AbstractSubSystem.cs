@@ -24,7 +24,7 @@ namespace Castle.MicroKernel
 	{
 		private IKernel kernel;
 
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 		public override object InitializeLifetimeService()
 		{
 			return null;

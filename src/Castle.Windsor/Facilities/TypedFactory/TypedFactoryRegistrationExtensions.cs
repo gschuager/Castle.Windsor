@@ -63,7 +63,12 @@ namespace Castle.Facilities.TypedFactory
 
 		private static bool HasOutArguments(Type serviceType)
 		{
+#if !NETCF
 			return serviceType.GetMethods().Any(m => m.GetParameters().Any(p => p.IsOut));
+#else
+			// TODO: verify how to detect out parameters
+			return false;
+#endif
 		}
 	}
 }

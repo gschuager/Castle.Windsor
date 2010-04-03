@@ -114,10 +114,14 @@ namespace Castle.MicroKernel.ModelBuilder
 			AddContributor(new PropertiesDependenciesModelInspector());
 			AddContributor(new LifecycleModelInspector());
 			AddContributor(new InterceptorInspector());
+#if !NETCF
 			AddContributor(new MixinInspector());
+#endif
 			AddContributor(new AdditionalInterfacesInspector());
 			AddContributor(new ComponentActivatorInspector());
+#if !NETCF
 			AddContributor(new ComponentProxyInspector());
+#endif
 		}
 	}
 }

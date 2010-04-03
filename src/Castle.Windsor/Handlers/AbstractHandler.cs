@@ -36,7 +36,9 @@ namespace Castle.MicroKernel.Handlers
 #if (!SILVERLIGHT)
 	[Serializable]
 #endif
+#if !NETCF
 	[DebuggerDisplay("Model: {ComponentModel.Service} / {ComponentModel.Implementation} ")]
+#endif
 #if (!SILVERLIGHT)
 	public abstract class AbstractHandler : MarshalByRefObject, IHandler, IExposeDependencyInfo, IDisposable
 #else
@@ -448,7 +450,7 @@ namespace Castle.MicroKernel.Handlers
 				case LifestyleType.Transient:
 					manager = new TransientLifestyleManager();
 					break;
-#if (!SILVERLIGHT)
+#if !SILVERLIGHT && !NETCF
 				case LifestyleType.PerWebRequest:
 					manager = new PerWebRequestLifestyleManager();
 					break;

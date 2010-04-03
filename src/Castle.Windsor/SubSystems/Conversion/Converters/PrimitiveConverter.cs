@@ -62,7 +62,11 @@ namespace Castle.MicroKernel.SubSystems.Conversion
 
 			try
 			{
+#if !NETCF
 				return Convert.ChangeType(value, targetType,Thread.CurrentThread.CurrentCulture);
+#else
+				return Convert.ChangeType(value, targetType, System.Globalization.CultureInfo.InvariantCulture);
+#endif
 			}
 			catch(Exception ex)
 			{
