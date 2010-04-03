@@ -29,10 +29,10 @@ Modifications:
 - alternative implementation of ComponentModelConverter - needs testing
 - replaced System.Threading.Thread.CurrentThread.CurrentCulture by System.Globalization.CultureInfo.InvariantCulture
 - replaced initialization of this.kernel.ProxyFactory with a new instance of NotSupportedProxyFactory in WindsorContainer
+- replaced [ThreadStatic] attribute on DefaultKernel.currentCreationContext field with an equivalent implementation using TLS (NEEDS TESTING!!!)
 
 
 TODO:
-- replace [ThreadStatic] attribute (currently commented out) on DefaultKernel.currentCreationContext field with an equivalent implementation using TLS
 - research how to detect "out" parameters (ParameterInfo.IsOut not supported in CF) in TypedFactoryRegistrationExtensions
 
 
